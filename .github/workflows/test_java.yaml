@@ -10,9 +10,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4 # Action pour récupérer ton code du dépôt
 
-      - name: Change to right directory
-        run: cd java/my-app # Fais attention a bien te deplacer dans le bon dossier
-
       - name: Set up JDK 11 # Ou la version que tu as configurée dans ton pom.xml
         uses: actions/setup-java@v4 # Action pour configurer Java
         with:
@@ -21,4 +18,5 @@ jobs:
           cache: 'maven' # Met en cache les dépendances Maven pour accélérer les builds suivants
 
       - name: Build and test with Maven
+        working-directory: ./java/my-app # Attention a mettre le bon dossier
         run: mvn -B package # -B pour batch mode. 'package' compile, teste, et package.
