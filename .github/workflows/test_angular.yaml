@@ -31,7 +31,7 @@ jobs:
           cache-dependency-path: ${{ env.APP_DIRECTORY }}/package-lock.json
 
       - name: Installer Firefox ESR pour les tests
-        run: sudo apt-get update && sudo apt-get install -y firefox-esr
+        run: sudo apt -y update && sudo apt -y upgrade && sudo apt -y install firefox-esr
 
       - name: Installer les dépendances NPM
         working-directory: ${{ env.APP_DIRECTORY }}
