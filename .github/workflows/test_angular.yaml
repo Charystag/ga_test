@@ -17,31 +17,32 @@ jobs:
 
     env:
       NODE_VERSION: '20'
+      APP_DIRECTORY: ./angular/maSuperAppAngular
 
     steps:
       - name: Checkout du code
         uses: actions/checkout@v4
 
       - name: Setup Node.js ${{ env.NODE_VERSION }}
-        working-directory: ./angular/maSuperAppAngular
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+          cache-depency-path: ${{ env.APP_DIRECTORY }}/package-lock.json
 
       - name: Installer Firefox ESR pour les tests
         run: sudo apt-get update && sudo apt-get install -y firefox-esr
 
       - name: Installer les dépendances NPM
-        working-directory: ./angular/maSuperAppAngular
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: npm ci
 
       - name: Linter le code (Optionnel mais bonne pratique)
-        working-directory: ./angular/maSuperAppAngular
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: ng lint
 
       - name: Exécuter les tests unitaires avec Firefox Headless
-        working-directory: ./angular/maSuperAppAngular
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: ng test --watch=false --no-progress --browsers=FirefoxHeadless
 
       - name: Builder l'application pour la production
