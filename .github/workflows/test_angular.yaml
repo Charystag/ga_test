@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-depency-path: ${{ env.APP_DIRECTORY }}/package-lock.json
+          cache-dependency-path: ${{ env.APP_DIRECTORY }}/package-lock.json
 
       - name: Installer Firefox ESR pour les tests
         run: sudo apt-get update && sudo apt-get install -y firefox-esr
