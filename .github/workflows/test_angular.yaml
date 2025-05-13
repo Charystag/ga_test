@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js ${{ env.NODE_VERSION }}
+        working-directory: ./angular/maSuperAppAngular
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -32,17 +33,22 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y firefox-esr
 
       - name: Installer les dépendances NPM
+        working-directory: ./angular/maSuperAppAngular
         run: npm ci
 
       - name: Linter le code (Optionnel mais bonne pratique)
+        working-directory: ./angular/maSuperAppAngular
         run: ng lint
 
       - name: Exécuter les tests unitaires avec Firefox Headless
+        working-directory: ./angular/maSuperAppAngular
         run: ng test --watch=false --no-progress --browsers=FirefoxHeadless
 
       - name: Builder l'application pour la production
+        working-directory: ./angular/maSuperAppAngular
         run: ng build --configuration production
 
       - name: Étape conditionnelle pour la branche master
+        working-directory: ./angular/maSuperAppAngular
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: echo "🎉 Push sur MAIN réussi et buildé avec Firefox !"
+        run: echo "🎉 Push sur master réussi et buildé avec Firefox !"
